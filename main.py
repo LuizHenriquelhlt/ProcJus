@@ -7,49 +7,38 @@ from uuid import uuid4
 from modulo import create_directory, Conv_PDF
 app = Flask(__name__)
 
-
+# Define the database engine
 DATABASE_URL = "sqlite:///procjus.db"
-engine = create_engine(DATABASE_URL, echo=False)  # Cria o objeto que sera utilizado para conectar ao SQLITE
-app.config['static_url_path'] = '/static'
-@app.route('/')
-def index():
-    return redirect('https://proc-jus.vercel.app/static/home.html')
+engine = create_engine(DATABASE_URL, echo=False)  # Set echo to True to see SQL queries
 
-@app.route('/', methods=['GET']) # Redireciona da raiz para a pagina home
-def redirect_home():
+# Create a session to interact with the database
 
-
-    return redirect('static/home.html')  
-
-
-@app.route('/static/<path:filename>', methods=['GET']) # Serve todas as paginas publicas e arquivos estaticos
+@app.route('/static/<path:filename>', methods=['GET'])
 def serve_static(filename):
 
     return send_from_directory('static', filename)
 
-@app.route('/static/area_do_cliente.html', methods=['GET']) # Serve a pagina da area do cliente
+@app.route('/static/area_do_cliente.html', methods=['GET'])
 def area_do_cliente():
     
     session_cookie = request.cookies.get('session')
     
 
-    Session = sessionmaker(bind=engine) 
-    session = Session() # Conecta ao SQLITE
-
-    user = session.query(User).filter_by(cookie=session_cookie).first() # Consulta se o usuario esta logado
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    # Check if the session cookie matches the cookie_value of any user in the table
+    user = session.query(User).filter_by(cookie=session_cookie).first()
 
     if user:
-       # Caso ele esteja logado serve a pagina de area do cliente, caso nao esteja é redirecionado para a pagina de login
-        session.close()
+        # Session is valid, serve the page
         return send_from_directory('static', "area_do_cliente.html")
     else:
-        session.close()
-
-        return redirect('/static/login.html') 
-
+        # Session is invalid, redirect to login page
+        return redirect('/static/login.html')  # You can replace '/login' with the appropriate login route
 
 
-@app.route('/cadastrar', methods=['POST']) # Endpoint para cadastro do novo usuario
+
+@app.route('/cadastrar', methods=['POST'])
 def cadastrar():
 
 
@@ -61,77 +50,74 @@ def cadastrar():
     organization = None
 
     Session = sessionmaker(bind=engine)
-    session = Session() # Conecta ao SQLITE
+    session = Session()
     
-    new_user = User(password=password, organization=organization, cookie=cookie, email=email) # Cadastra o usuario no BD
+    new_user = User(password=password, organization=organization, cookie=cookie, email=email)
 
     session.add(new_user)
     session.commit()
     session.close()
     return jsonify({'message': 'Usuario adicionado'}), 201
 
-@app.route('/login', methods=['POST']) # Endpoint para login do usuario
-def login(): 
+@app.route('/login', methods=['POST'])
+def login():
     json_data = request.get_json()
     email = json_data.get('email')
     password = json_data.get('password')
     Session = sessionmaker(bind=engine)
-    session = Session() # Conecta ao SQLITE
-
-    user = session.query(User).filter_by(email=email).first() # Consulta no BD as informações associadas ao email inserido
+    session = Session()
+    # Retrieve user by email from the database
+    user = session.query(User).filter_by(email=email).first()
 
     if user and user.password == password:
-        # Caso exista um usuario com o email igual ao inserido cuja senha também é igual a inserida, retorna o valor do cookie desse usuario
-
-        session.close()
-
-        response = {'message': 'Login bem sucedido', 'cookie_value': user.cookie}
+        # Password is correct
+        response = {'message': 'Login successful', 'cookie_value': user.cookie}
         return jsonify(response), 200
     else:
-        # Caso o usuario nao exista ou a senha estiver errada ele nao consegue fazer login
-        response = {'message': 'Credenciais incorretas'}
+        # Invalid credentials
+        response = {'message': 'Invalid credentials'}
         return jsonify(response), 401
 
 
-@app.route('/upload', methods=['POST']) # Endpoint para upload do arquivo que será resumido
+@app.route('/upload', methods=['POST'])
 def fazer_resumo():
-
-    if 'file' not in request.files: # Verifica se a requisição possui um arquivo
-        return 'Nenhum arquivo encontrado'
+    # Check if the post request has the file part
+    if 'file' not in request.files:
+        return 'No file part'
 
     file = request.files['file']
 
-    
-    if file.filename == '': # Verifica se o arquivo não está vazio
-        return 'Arquivo vazio invalido'
+    # If the user submits an empty file input, ignore it
+    if file.filename == '':
+        return 'No selected file'
 
-
-    folder_hash = str(uuid4()) # Gera um UUID para criação de uma pasta com nome único
-    create_directory(None, folder_hash) # Cria a pasta
-    file.save('documentos/'+ folder_hash+ "/"+ file.filename) # Salva o arquivo que será resumido na pasta
+    # Save the uploaded file to a specific location (you can customize the path)
+    folder_hash = str(uuid4())
+    create_directory(None, folder_hash)
+    file.save('documentos/'+ folder_hash+ "/"+ file.filename)
 
     caminho_pdf = f"documentos/{folder_hash}/{file.filename}"
     caminho_txt = f"documentos/{folder_hash}/resumo_bard.txt" 
 
-    
-    converter = Conv_PDF(caminho_pdf, caminho_txt) # Instancia da classe Conv_PDF que será responsável por gerar o resumo
-    
-    resumo_texto = converter.converter_para_texto() # Gera o resumo
+    # Cria uma instância da classe Conv_PDF com os caminhos especificados
+    converter = Conv_PDF(caminho_pdf, caminho_txt)
+    # Inicia o processo de conversão do PDF para texto e geração de resumos
+    resumo_texto = converter.converter_para_texto()
 
-    if "não consigo te ajudar com isso" in resumo_texto: # Verifica se foi retornado um resumo invalido
+    if "não consigo te ajudar com isso" in resumo_texto:
 
         converter2 = Conv_PDF(caminho_pdf, caminho_txt)
-
+        # Inicia o processo de conversão do PDF para texto e geração de resumos
         resumo_texto2 = converter2.converter_para_texto()
 
-        return jsonify({"resumo": resumo_texto2}), 200 
+        return jsonify({"resumo": resumo_texto2}), 200
 
 
-    return jsonify({"resumo": resumo_texto}), 200 # Retorna o texto do resumo
+    return jsonify({"resumo": resumo_texto}), 200
 
 
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True) # Inicia o servidor
+    app.run(debug=True)
