@@ -19,7 +19,7 @@ def index():
 def redirect_home():
 
 
-    return redirect('/static/home.html')  
+    return redirect('https://proc-jus.vercel.app/static/home.html')  
 
 
 @app.route('/static/<path:filename>', methods=['GET']) # Serve todas as paginas publicas e arquivos estaticos
