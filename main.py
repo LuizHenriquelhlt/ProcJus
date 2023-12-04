@@ -13,13 +13,13 @@ engine = create_engine(DATABASE_URL, echo=False)  # Cria o objeto que sera utili
 app.config['static_url_path'] = '/static'
 @app.route('/')
 def index():
-    return redirect('static/home.html')
+    return redirect('https://proc-jus.vercel.app/static/home.html')
 
 @app.route('/', methods=['GET']) # Redireciona da raiz para a pagina home
 def redirect_home():
 
 
-    return redirect('https://proc-jus.vercel.app/static/home.html')  
+    return redirect('static/home.html')  
 
 
 @app.route('/static/<path:filename>', methods=['GET']) # Serve todas as paginas publicas e arquivos estaticos
