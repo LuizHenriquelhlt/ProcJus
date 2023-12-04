@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADASTRO</title>
+    <style>
+        body{
+      background-color:black;
+      font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .area-login{
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .login{
+        background-color: #181920;
+        width: 355px;
+        height: 320px;
+        padding: 35px 35px 55px 35px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        align-items: center;
+         
+      }
+
+      .login .form{
+        display: flex;
+        width:100%;
+        flex-direction: column;
+
+      }
+
+      .login input{
+        margin-top: 10px;
+        background-color: #252a34;
+        border: none; 
+        height: 45px;
+        outline: none;
+        border-radius: 5px;
+        color: aliceblue;
+        padding-left: 10px;
+       
+
+
+      }
+
+      .login img{
+        width: 65px;
+        height: auto;
+        
+      
+      }
+
+      .input::placeholder{
+        color: aliceblue;
+        font-size: 14px;
+        
+
+
+      }
+
+      .form a button{
+        display: block;
+        background-color: rgb(132, 14, 201);
+        font-size: 20px;
+        text-transform: uppercase;
+        font-weight: bold;
+        
+
+
+
+      }
+      p{
+        color: aliceblue;
+        text-align: center;
+
+      }
+      a{
+        color: rgb(132, 14, 201);
+        text-decoration: none;
+        margin-left: 0px;
+
+
+      }
+      .bottom{
+       margin-bottom: 40px;
+      }
+
+      .botao button{
+    padding: 15px 30px;
+    font-size: 15px;
+    background-color: rgb(132, 14, 201);
+    border: 1px solid  rgb(132, 14, 201) ;
+    border-radius: 5px;
+    cursor: pointer;
+    color: aliceblue;
+    height: 50px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    transition: .5;
+    outline: 0;
+    width: 100%;
+
+   
+    
+}
+
+.botao button:hover{
+    background-color: aliceblue;
+    color:rgb(132, 14, 201);
+
+} 
+    </style>
+</head>
+<body>
+    <section class="area-login">
+        <div class="login">
+          <div>
+            <img src="logo.png">
+          </div>
+    
+          <div class="form" action="">
+            <input id="email" type="text" name="e-mail" placeholder=" e-mail" autofocus >
+            <input id="password" class="bottom_senha" type="password" name="senha" placeholder="senha"> 
+            <a class="botao"><button onclick="submitForm()"> cadastrar</button></a>
+          </div>
+    
+          <p>Já possui cadastro ?<a href="login.html"> Clique aqui</a></p>
+          
+      </section>
+    
+    
+    
+        </div>
+      </section>
+    
+</body>
+<script>
+
+// Envia as informações inseridas nos cmapos de email e senha para o endpoint de cadastro
+
+function submitForm() {
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+
+    if (password && email) {
+        fetch('/cadastrar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, password: password }),
+        })
+        .then(response => {
+           if (response.status == 201) {
+                alert('Formulario enviado com sucesso!');
+            } else {
+                alert('Falha no envio');
+            }
+          }
+          )      
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        alert('Por favor, complete os campos');
+    }
+}
+</script>
+</html>
