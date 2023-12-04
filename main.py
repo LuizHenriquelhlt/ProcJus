@@ -10,7 +10,10 @@ app = Flask(__name__)
 
 DATABASE_URL = "sqlite:///procjus.db"
 engine = create_engine(DATABASE_URL, echo=False)  # Cria o objeto que sera utilizado para conectar ao SQLITE
-
+app.config['static_url_path'] = '/static'
+@app.route('/')
+def index():
+    return redirect('static/home.html')
 
 @app.route('/', methods=['GET']) # Redireciona da raiz para a pagina home
 def redirect_home():
