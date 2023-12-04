@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="font.css" rel="stylesheet">
+  <style>
+     
+      
+      body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color:#181920;
+      color: aliceblue;
+    }
+      
+    
+
+        img{
+            width: 100px;
+            margin-left: 30px;
+        }
+
+        header{
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+        }
+
+        .linha{
+            width: 100%;
+            height: 1px;
+            background-color: aliceblue;
+        }
+
+        input[type="file"]{
+            display: none;
+
+        }
+        label{
+            padding: 20px 10px;
+            width: 200px;
+            background:rgb(132, 14, 201);
+            color:aliceblue;
+            text-transform: uppercase;
+            display: block;
+            margin-top: 10px;
+            font-family: poppinsregular;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        label:hover{
+            color:rgb(132, 14, 201);
+            background:aliceblue;
+
+        }
+        h2{
+            text-align: center;
+            color: aliceblue;
+            font-size: 40px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        main{
+            padding-left:30px;
+            padding-right:30px;
+            padding-bottom: 50px;
+            padding-top: 25px;
+        }
+
+        p{
+            text-align: justify;
+            color: aliceblue;
+            font-size: 18px;
+            font-family:sans-serif;
+        }
+
+        .botao_baixar{
+            padding: 20px 10px;
+            width: 200px;
+            background:rgb(132, 14, 201);
+            color:aliceblue;
+            text-transform: uppercase;
+            display: block;
+            margin-top: 10px;
+            font-family: poppinsregular;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+
+        }
+
+        .botao_baixar:hover{
+            color:rgb(132, 14, 201);
+            background:aliceblue;
+        }
+
+        ul{
+    text-align: center;
+    padding: 20px;
+    margin-right: 30px;
+    }  
+
+    li{
+    display: inline-block;
+    margin: 20px;
+    }
+
+    .botao_login{
+        border: 2px solid rgb(132, 14, 201);
+        padding: 10px;
+        border-radius: 15px;
+        color: aliceblue;
+
+    }
+
+    .botao_login:hover{
+        background-color: rgb(132, 14, 201);
+        transition: 0.3s all;
+    }
+
+    .botao_outros{
+        color: aliceblue;
+
+    }
+
+    .botao_outros:hover{
+        color: rgb(132, 14, 201);
+        transition: .3s;
+
+    }
+    .flex_container1{
+      display: flex;
+      margin-bottom: 40px;
+      margin-top: 40px;
+    }
+
+
+   
+
+    .flex-container {
+      flex-direction: column;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
+
+    .flex-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px solid  rgb(132, 14, 201);
+      padding: 20px;
+      border-radius: 10px;
+      margin-right: 20px;
+     width: 400px;
+     margin:0 25px 0 25px;
+     box-shadow: 3px 2px 4px 4px rgb(132, 14, 201) ;
+     
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    label {
+      padding: 20px 10px;
+      width: 200px;
+      background: rgb(132, 14, 201);
+      text-transform: uppercase;
+      display: block;
+      margin-top: 10px;
+      font-family: poppinsregular;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    label:hover {
+      background: aliceblue;
+      transition: .3;
+    }
+
+    .botao_download{
+      background-color: rgb(132, 14, 201);
+      text-decoration: none;
+      width: 200px;
+      text-align: center;
+      padding: 20px 10px;
+      text-transform: uppercase;
+      color: aliceblue;
+      margin-top: 12px;
+    }
+
+    .botao_download:hover{
+      transition: .3;
+      background-color: aliceblue;
+      color: rgb(132, 14, 201);
+    }
+
+    .texto_flex{
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     font-size: 25px;
+    }
+  </style>
+  <title>AREA DO CLIENTE</title>
+</head>
+<body>
+    <header>
+        <div>
+            <img src="logo.png" alt="Procjus">
+        </div>
+        <ul>
+           
+            <a class="botao_outros" href="/static/home.html"><li>Inicio</li></a>
+            <a class="botao_login" href="/static/login.html" id="inscreva-se-btn"><li>Sair</li></a>
+           
+
+        </ul>
+        
+    </header>
+    
+    <div class="linha"></div>
+    <div class="flex_container1">
+      <div class="flex-container">
+        <div class="flex-item">
+          <h2 class="texto_flex">Insira seu Arquivo Aqui</h2>
+          <input type="file" id="fileInput" />
+          <label for="fileInput">Selecionar arquivo</label>
+        </div>
+        <a class="botao_login" href="/static/login.html" id="inscreva-se-btn"><li>Sair</li></a>
+
+      </div>
+    
+     <!--  <div class="flex-item">
+        <h2 class="texto_flex">Baixe seu Arquivo Aqui</h2>
+        <a class="botao_download" href="#" id="downloadLink" download="name">Download</a>
+      </div> -->
+    </div>
+    <main>
+        <h2>Lorem, ipsum dolor.</h2>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo, esse deleniti. Qui amet recusandae totam ut explicabo possimus aliquam officia cumque dolorum accusantium similique, consequatur est at reprehenderit. Nemo laudantium excepturi doloribus at quas, voluptas cupiditate perferendis est sequi adipisci delectus consequuntur nostrum magnam earum. Suscipit earum eligendi voluptatibus minus ipsum ipsa aliquam, asperiores nostrum sequi atque fuga vitae aspernatur? Est officia sunt porro explicabo unde alias commodi, eos beatae omnis ullam similique sit nostrum aut doloremque? Eius molestias est cum quod eos error id deserunt assumenda, omnis ad aspernatur distinctio fugiat officiis! Magni doloribus unde ea omnis, laudantium saepe!</p>
+        <h2>Lorem, ipsum dolor.</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, ipsum iure cumque magni necessitatibus atque officia quibusdam obcaecati ratione laudantium asperiores? Labore voluptates animi non facere cum totam incidunt tempora placeat corrupti maxime. Voluptatibus, consequuntur ullam. Ea adipisci iusto, non ipsam aperiam praesentium tempora quas, alias nostrum commodi quam. Delectus veniam eveniet eligendi vitae consequatur commodi rerum tempora voluptas omnis quo iusto nemo fugit ipsam quibusdam incidunt quasi repudiandae, dignissimos nobis, vel, velit minus. Beatae, nam iusto nobis repudiandae eveniet quis animi eaque ex dolor tempora minima repellendus quos consequatur alias eius commodi, corporis veritatis laboriosam distinctio reiciendis natus delectus.</p>
+        
+    </main>
+
+
+
+</body>
+
+</html>

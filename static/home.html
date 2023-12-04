@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/styles/style.css" rel="stylesheet">
+    <link href="/styles/media.css" rel="stylesheet">
+    <link href="/styles/fonts.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Página Inicial</title>
+    <style>
+    body{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-family: poppinsregular;
+    max-width: auto;
+    margin-left:50px ;
+    padding: 15px;
+   
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+li{
+    display: inline-block;
+    margin: 20px;
+}
+
+a{
+    color: white;
+}
+
+a:hover{
+    color: rgb(132, 14, 201);
+    transition: 0.3s all;
+}
+
+#inscreva-se-btn{
+    border: 2px solid rgb(132, 14, 201);
+    padding: 10px;
+    border-radius: 15px;
+}
+
+#inscreva-se-btn:hover {
+    background-color: rgb(132, 14, 201);
+    color: white;
+}
+
+h1{
+    font-weight: 200;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+}
+
+h2{
+    font-size: 60px;
+    line-height: 10px;
+    font-family: poppinsmedium;
+}
+
+span{
+    color: rgb(132, 14, 201);
+}
+
+p{
+    line-height: 20px;
+    max-width: 500px;
+    font-family: poppinslight;
+    font-size: 20px;
+}
+
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+form [type="submit"]{
+    height: 50px;
+    width: 50%;
+    background-color: rgb(132, 14, 201);
+    color: white;
+    font-weight: bold;
+}
+form [type="submit"]:hover{
+    cursor: pointer;
+}
+
+input{
+    margin-top: 20px;
+    height: 20px;
+    padding: 15px;
+    border-radius: 20px;
+    border: none;
+    font-size: 15px;
+}
+@media screen and (max-width: 760px)
+{
+
+header{
+    flex-direction: column;
+   
+}
+
+
+
+
+form{
+    margin: 0 auto;
+    width: 100%;
+}
+
+input{
+    align-self: center;
+}
+
+
+ul{
+    text-align: center;
+    padding: 20px;
+}
+}
+
+.logo{
+    width: 100px;
+}
+
+button{
+    padding: 15px 30px;
+    font-size: 15px;
+    background-color: rgb(132, 14, 201);
+    border: 1px solid  rgb(132, 14, 201) ;
+    border-radius: 50px;
+    cursor: pointer;
+    color: aliceblue;
+    height: 50px;
+    margin-top: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    transition: .5;
+    outline: 0;
+}
+
+button:hover{
+    background-color: aliceblue;
+    color:rgb(132, 14, 201);
+
+} 
+
+footer{
+    
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    height:auto;
+    width: 100%;
+    font-family: "Open Sans";
+    padding-top: 40px;
+    color: #fff;
+}
+.footer-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+.footer-content h3{
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 3rem;
+    text-align: center;
+}
+.footer-content p{
+    max-width: 500px;
+    margin: 10px auto;
+    line-height: 28px;
+    font-size: 14px;
+}
+.socials{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0 3rem 0;
+    padding-right: 55px;
+}
+.socials li{
+    margin: 0 10px;
+    padding-left: 15px;
+}
+.socials a{
+    text-decoration: none;
+    color: #fff;
+}
+.socials a i{
+    font-size: 1.1rem;
+    transition: color .4s ease;
+
+}
+.socials a:hover i{
+    color: aqua;
+}
+
+.footer-bottom{
+    background: #000;
+    width: 100vw;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer-bottom p{
+    font-size: 14px;
+    word-spacing: 2px;
+    text-transform: capitalize;
+}
+.footer-bottom span{
+    text-transform: uppercase;
+    opacity: .4;
+    font-weight: 200;
+}
+.footer_text{
+    text-align: center;
+    max-width: none;
+    padding-left: 25px;
+    padding-bottom: 35px;
+}
+.footer_tittle{
+    text-align: center;
+    max-width: none;
+    padding-left: 0px;
+    font-size: 40px;
+}
+
+.footer_text1{
+    text-align: center;
+   padding-left: 380px;
+}
+.linha{
+    width: 100%;
+    height: 1px;
+    background-color: aliceblue;
+    margin-top: 30px;
+}        
+
+
+
+
+
+    
+
+
+
+ 
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <header >
+        <div>
+          <img class="logo" src="logo.png">
+        </div>
+
+        <ul>
+           
+            <a href="/static/home.html"><li>Inicio</li></a>
+     <!--        <a href="#"><li>Sobre Nós</li></a> -->
+            <a href="/static/login.html" id="inscreva-se-btn"><li>Login</li></a>
+           
+
+        </ul>
+    </header>
+    <hr>
+
+
+    <main>
+        <aside>
+            <h2><span> ProcJus: Registre-se agora </span></h2>
+            <h2> faça sua consulta jurídica</h2>
+            <p> O ProcJus é uma ferramenta que utiliza inteligência artificial para gerar resumos de documentos jurídicos. Os resumos são precisos e atualizados, e são gerados em minutos, mesmo para documentos complexos. Isso permite aos profissionais jurídicos economizar tempo e recursos, e tomar decisões mais rapidamente e com mais precisão.
+
+               </p>
+            
+           <!--  <form>
+                <input type="text" placeholder="Nome">
+                <input type="email" placeholder="E-mail">
+                
+            </form>
+ -->
+            <a class="botao" href="/static/cadastro.html"><button> criar conta</button></a>
+            
+            
+        </aside>
+
+       
+        </main>
+        <div class="linha"></div>
+        <footer>
+            <div class="footer_content">
+                <h3 class="footer_tittle">ProcJus</h3>
+                <p class="footer_text">Sua Consulta Jurídica de Maneira Fácil e Prática</p>
+                <ul class="socials">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                   
+                    
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer_text1">ProcJus &copy;2023 Ent. UnB </p>
+            </div>
+    
+        </footer>
+    
+
+    
+</body>
+</html>
