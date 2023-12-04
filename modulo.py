@@ -4,7 +4,7 @@ import unicodedata
 import os as o
 import  re
 
-o.environ['_BARD_API_KEY'] = "dQh1v7BI-7aJIqGyNVX5U6TqQpCJ-gqNwbIg1hvYP_TgD3ZFbZYaZtUWLc6W_dpotp_FgQ."
+o.environ['_BARD_API_KEY'] = API_Bard
 
 def create_directory(relative_directory_path, folder_hash): # Cria uma pasta com o nome unico
     
