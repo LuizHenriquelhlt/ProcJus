@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Segredos e dados locais: nunca versionar
+.env
+*.db
+*.sqlite3
+uploads/
+documentos/
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
