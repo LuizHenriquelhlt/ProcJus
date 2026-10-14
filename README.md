@@ -8,6 +8,12 @@
   <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
   <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" alt="Docker">
+  <a href="https://github.com/LuizHenriquelhlt/ProcJus/actions/workflows/ci.yml"><img src="https://github.com/LuizHenriquelhlt/ProcJus/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+</p>
+
+<p align="center">
+  <a href="https://luizhenriquelhlt.github.io/ProcJus/"><b>▶ Experimente a demo ao vivo</b></a>
+  &nbsp;·&nbsp; sem cadastro, direto no navegador
 </p>
 
 Quem recebe uma intimação, uma sentença ou um contrato e não é da área do Direito costuma travar no
@@ -15,11 +21,31 @@ Quem recebe uma intimação, uma sentença ou um contrato e não é da área do 
 quem é quem, o que foi decidido, **quais prazos correm** e o que a pessoa pode fazer em seguida. Depois disso,
 é possível conversar com o documento e perguntar qualquer coisa com as próprias palavras.
 
+[![Mandado de citação explicado, com prazos, glossário e chat](docs/demo-mandado.jpg)](https://luizhenriquelhlt.github.io/ProcJus/)
+
+## Demo ao vivo
+
+**https://luizhenriquelhlt.github.io/ProcJus/**: clique em **"Experimentar sem cadastro"** e explore dois documentos de exemplo:
+
+| Documento | O que observar |
+|---|---|
+| **Mandado de citação** (cobrança de aluguel) | Prazos em destaque: audiência marcada e 15 dias úteis para a defesa. Pergunte no chat: *"E se eu faltar à audiência?"* |
+| **Sentença** (banco x consumidor) | Decisão, valores e próximos passos. Na aba *Texto original*, passe o mouse sobre os termos destacados |
+
+> **Como a demo funciona:** é o mesmo frontend do projeto, compilado com `VITE_DEMO=true`. A API é
+> substituída por uma implementação que roda no navegador ([`frontend/src/demo`](frontend/src/demo)), com
+> documentos fictícios e respostas pré-escritas. Não há servidor, IA nem envio de arquivos, e os dados ficam
+> só no `localStorage`. Para analisar documentos reais com IA, rode o projeto completo (veja abaixo).
+> O deploy é automático via GitHub Actions a cada push na `main`.
+
+<details>
+<summary>Mais capturas de tela</summary>
+
 ![Página inicial](docs/landing.jpg)
 
-![Documento explicado, com glossário e chat](docs/documento.jpg)
+![Sentença explicada, com glossário e chat](docs/documento.jpg)
 
-> As imagens mostram um processo fictício, usado apenas como demonstração.
+</details>
 
 ## Funcionalidades
 
@@ -115,7 +141,7 @@ cd backend && pytest        # 17 testes: autenticação, isolamento entre usuár
 cd frontend && npm run lint && npm run build
 ```
 
-O CI (GitHub Actions) roda lint, formatação e testes do backend, além do lint e do build do frontend, a cada push.
+O CI (GitHub Actions) roda lint, formatação e testes do backend, além do lint e do build do frontend, a cada push. Um segundo workflow publica a demo no GitHub Pages.
 
 ## Estrutura
 
@@ -131,6 +157,7 @@ frontend/
   src/
     pages/        # landing, login/cadastro, painel, documento
     components/   # chat, glossário interativo, layout
+    demo/         # API simulada e documentos de exemplo da demo (GitHub Pages)
 ```
 
 ## Próximos passos

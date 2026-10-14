@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { IS_DEMO } from '../api'
 import { useAuth } from '../auth'
 import { Page } from '../components/Layout'
 
@@ -14,8 +16,18 @@ const STEPS = [
 ]
 
 export function Landing() {
-  const { user } = useAuth()
+  const { user, register } = useAuth()
+  const navigate = useNavigate()
+  const [entering, setEntering] = useState(false)
   const cta = user ? '/app' : '/cadastro'
+
+  // Demo: cria uma conta de visitante (só neste navegador) já com documentos de exemplo
+  async function enterDemo() {
+    setEntering(true)
+    const id = Math.random().toString(36).slice(2, 8)
+    await register('Visitante', `visitante-${id}@demo.procjus.app`, `demo-${id}-2026`)
+    navigate('/app')
+  }
 
   return (
     <Page>
@@ -33,7 +45,12 @@ export function Landing() {
               fazer em seguida.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to={cta} className="btn-primary px-6 py-3 text-base">
+              {IS_DEMO && !user && (
+                <button onClick={enterDemo} disabled={entering} className="btn-primary px-6 py-3 text-base">
+                  {entering ? 'Abrindo…' : 'Experimentar sem cadastro'}
+                </button>
+              )}
+              <Link to={cta} className={`${IS_DEMO && !user ? 'btn-secondary' : 'btn-primary'} px-6 py-3 text-base`}>
                 {user ? 'Ir para meus documentos' : 'Começar grátis'}
               </Link>
               {!user && (

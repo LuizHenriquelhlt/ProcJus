@@ -1,3 +1,5 @@
+import { demoApi } from './demo/demoApi'
+
 export type User = { id: string; name: string; email: string; created_at: string }
 
 export type GlossaryTerm = { termo: string; explicacao: string }
@@ -77,7 +79,7 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   return body as T
 }
 
-export const api = {
+const httpApi = {
   me: () => request<User>('/auth/me'),
   login: (email: string, password: string) =>
     request<User>('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
@@ -99,3 +101,10 @@ export const api = {
   sendMessage: (id: string, content: string) =>
     request<Message[]>(`/documents/${id}/messages`, { method: 'POST', body: JSON.stringify({ content }) }),
 }
+
+export type Api = typeof httpApi
+
+/** Modo demonstração (GitHub Pages): tudo roda no navegador, com dados fictícios e sem servidor. */
+export const IS_DEMO = import.meta.env.VITE_DEMO === 'true'
+
+export const api: Api = IS_DEMO ? demoApi : httpApi

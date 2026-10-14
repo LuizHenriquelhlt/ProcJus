@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { IS_DEMO } from '../api'
 import { useAuth } from '../auth'
 
 export function Logo({ className = '' }: { className?: string }) {
   return (
     <Link to="/" className={`flex items-center gap-2 font-bold tracking-tight text-brand-700 ${className}`}>
-      <img src="/favicon.svg" alt="" className="size-8" />
+      <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="size-8" />
       <span className="text-xl">
         Proc<span className="text-amber-500">Jus</span>
       </span>
@@ -60,6 +61,7 @@ export function Header() {
 export function Page({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
+      {IS_DEMO && <DemoBanner />}
       <Header />
       <main className="flex-1">{children}</main>
       <footer className="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
@@ -75,10 +77,24 @@ export function Disclaimer() {
     <div className="flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
       <span aria-hidden className="text-lg leading-none">⚖️</span>
       <p>
-        Esta explicação foi gerada por inteligência artificial para ajudar você a entender o documento. Ela pode conter
-        erros e <strong>não é uma orientação jurídica</strong>. Se houver prazo ou decisão a tomar, procure um advogado
+        {IS_DEMO
+          ? 'Nesta demonstração, a explicação é um exemplo pré-escrito; na versão completa ela é gerada por inteligência artificial e pode conter erros. '
+          : 'Esta explicação foi gerada por inteligência artificial para ajudar você a entender o documento. Ela pode conter erros. '}
+        Ela <strong>não é uma orientação jurídica</strong>. Se houver prazo ou decisão a tomar, procure um advogado
         ou a <strong>Defensoria Pública</strong> (gratuita para quem não pode pagar).
       </p>
+    </div>
+  )
+}
+
+function DemoBanner() {
+  return (
+    <div className="bg-brand-900 px-4 py-2 text-center text-xs text-brand-100">
+      <strong className="text-amber-300">Modo demonstração:</strong> documentos e respostas são exemplos fictícios
+      pré-escritos, e seus dados ficam só neste navegador.{' '}
+      <a href="https://github.com/LuizHenriquelhlt/ProcJus" className="font-semibold text-white underline">
+        Ver o código e rodar com IA de verdade
+      </a>
     </div>
   )
 }
