@@ -125,3 +125,25 @@ def test_chat_history_keeps_question_answer_order(client):
         client.post(f"/api/documents/{doc_id}/messages", json={"content": q})
     roles = [m["role"] for m in client.get(f"/api/documents/{doc_id}/messages").json()]
     assert roles == ["user", "assistant"] * 3
+
+
+def test_orphaned_documents_are_resumed(client, provider):
+    """Documento que ficou 'processing' (ex.: reinício no meio da análise) é retomado pela varredura."""
+    import asyncio
+
+    from app.main import app
+    from app.models import Document
+    from app.routers.documents import get_session_factory
+    from app.services.worker import process_pending
+
+    register(client)
+    factory = app.dependency_overrides[get_session_factory]()
+    doc_id = upload(client).json()["id"]
+    with factory() as db:
+        doc = db.get(Document, doc_id)
+        doc.status, doc.analysis = "processing", None
+        db.commit()
+
+    assert asyncio.run(process_pending(factory, provider)) == 1
+    assert client.get(f"/api/documents/{doc_id}").json()["status"] == "ready"
+    assert asyncio.run(process_pending(factory, provider)) == 0

@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 
@@ -7,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
 from app.db import Base, engine
 from app.routers import auth, documents
+from app.services.worker import sweep_forever
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("procjus")
@@ -19,7 +21,11 @@ async def lifespan(_: FastAPI):
         log.warning("SECRET_KEY padrão em uso: defina uma chave própria no .env antes de publicar.")
     log.info("Provedor de IA: %s", settings.llm_provider)
     Base.metadata.create_all(engine)
-    yield
+    sweeper = asyncio.create_task(sweep_forever())
+    try:
+        yield
+    finally:
+        sweeper.cancel()
 
 
 def create_app() -> FastAPI:

@@ -19,8 +19,9 @@ from app.deps import CurrentUser, DbSession
 from app.llm import ChatTurn, LLMError, LLMProvider, get_provider
 from app.models import Document, Message, User
 from app.schemas import DocumentOut, DocumentSummaryOut, MessageIn, MessageOut
-from app.services.analysis import analyze_document, answer_question
+from app.services.analysis import answer_question
 from app.services.pdf import PdfExtractionError, extract_pdf_text
+from app.services.worker import process_pending
 
 log = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/documents", tags=["documents"])
@@ -47,23 +48,6 @@ def _get_owned(db: Session, user: User, doc_id: str) -> Document:
     if doc is None or doc.user_id != user.id:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Documento não encontrado.")
     return doc
-
-
-async def _run_analysis(doc_id: str, provider: LLMProvider, session_factory: sessionmaker) -> None:
-    with session_factory() as db:
-        doc = db.get(Document, doc_id)
-        if doc is None:
-            return
-        try:
-            analysis = await analyze_document(provider, doc.text)
-            doc.analysis = analysis.model_dump()
-            doc.status = "ready"
-        except LLMError as exc:
-            doc.status, doc.error = "error", str(exc)
-        except Exception:
-            log.exception("Erro inesperado ao analisar documento %s", doc_id)
-            doc.status, doc.error = "error", "Erro inesperado ao analisar o documento."
-        db.commit()
 
 
 @router.get("", response_model=list[DocumentSummaryOut])
@@ -104,7 +88,7 @@ async def upload_document(
     )
     db.add(doc)
     db.commit()
-    background.add_task(_run_analysis, doc.id, provider, session_factory)
+    background.add_task(process_pending, session_factory, provider)
     return _summary(doc)
 
 
@@ -130,7 +114,7 @@ def retry_analysis(
         raise HTTPException(status.HTTP_409_CONFLICT, "Só é possível reprocessar documentos com erro.")
     doc.status, doc.error = "processing", None
     db.commit()
-    background.add_task(_run_analysis, doc.id, provider, session_factory)
+    background.add_task(process_pending, session_factory, provider)
     return _summary(doc)
 
 
