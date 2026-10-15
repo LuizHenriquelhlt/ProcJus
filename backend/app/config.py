@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     max_upload_mb: int = 10
     max_document_chars: int = 400_000
     chat_history_turns: int = 12
+    worker_sweep_seconds: float = 30.0
 
     llm_provider: Literal["gemini", "openai_compat", "fake"] = "fake"
     llm_timeout_seconds: float = 120.0
